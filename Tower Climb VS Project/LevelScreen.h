@@ -17,7 +17,6 @@ public:
 
 private:
 
-    sf::Texture tempTex;
     sf::Sprite tempSprite;
 
 };
