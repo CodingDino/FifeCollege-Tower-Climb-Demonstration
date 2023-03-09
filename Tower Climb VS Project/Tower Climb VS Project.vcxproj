@@ -150,12 +150,14 @@
     <ClCompile Include="LevelScreen.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Screen.cpp" />
+    <ClCompile Include="TitleScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssetManager.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="LevelScreen.h" />
     <ClInclude Include="Screen.h" />
+    <ClInclude Include="TitleScreen.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
