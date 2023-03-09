@@ -3,16 +3,16 @@
 
 LevelScreen::LevelScreen(Game* newGamePointer)
 	: Screen(newGamePointer)
-	, tempSprite()
+	, player()
 {
-	tempSprite.setTexture(AssetManager::RequestTexture("Assets/Graphics/PlayerStand.png"));
 }
 
 void LevelScreen::Update(sf::Time frameTime)
 {
+	player.Update(frameTime);
 }
 
 void LevelScreen::Draw(sf::RenderTarget& target)
 {
-	target.draw(tempSprite);
+	player.Draw(target);
 }
