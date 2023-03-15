@@ -24,13 +24,12 @@ public:
 	float GetBoundingCircleRadius();
 	sf::Vector2f GetBoundingRectSize();
 	sf::FloatRect GetAABB();
-
+	CollisionType GetCollisionType();
 
 
 	bool CheckCollision(SpriteObject _otherObject);
 
 	void SetColliding(bool _colliding);
-
 
 protected:
 

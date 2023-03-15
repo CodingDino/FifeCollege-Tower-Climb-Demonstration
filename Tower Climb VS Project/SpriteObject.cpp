@@ -1,5 +1,6 @@
 #include "SpriteObject.h"
 #include "VectorHelper.h"
+#include <algorithm>
 
 SpriteObject::SpriteObject()
 	: sprite()
@@ -60,6 +61,7 @@ void SpriteObject::Draw(sf::RenderTarget& target)
 	}
 }
 
+
 void SpriteObject::SetPosition(float posX, float posY)
 {
 	SetPosition(sf::Vector2f(posX, posY));
@@ -115,6 +117,11 @@ sf::FloatRect SpriteObject::GetAABB()
 	return sf::FloatRect(rect);
 }
 
+CollisionType SpriteObject::GetCollisionType()
+{
+	return collisionType;
+}
+
 bool SpriteObject::CheckCollision(SpriteObject _otherObject)
 {
 
@@ -123,22 +130,58 @@ bool SpriteObject::CheckCollision(SpriteObject _otherObject)
 	{
 	case CollisionType::CIRCLE:
 	{
-		sf::Vector2f otherCentre = _otherObject.GetCollisionCentre();
-		float otherRadius = _otherObject.GetBoundingCircleRadius();
+		if (_otherObject.GetCollisionType() == CollisionType::CIRCLE)
+		{
+			sf::Vector2f otherCentre = _otherObject.GetCollisionCentre();
+			float otherRadius = _otherObject.GetBoundingCircleRadius();
 
-		sf::Vector2f distanceVector = otherCentre - GetCollisionCentre();
+			sf::Vector2f distanceVector = otherCentre - GetCollisionCentre();
 
-		float distanceSquare = VectorHelper::SquareMagnitude(distanceVector);
+			float distanceSquare = VectorHelper::SquareMagnitude(distanceVector);
 
-		float minDistance = otherRadius + GetBoundingCircleRadius();
-		float minDistanceSquare = minDistance * minDistance;
+			float minDistance = otherRadius + GetBoundingCircleRadius();
+			float minDistanceSquare = minDistance * minDistance;
 
-		return distanceSquare <= minDistanceSquare;
+			return distanceSquare <= minDistanceSquare;
+		}
+		else
+		{
+			// Clamp our coordinates to other's box size
+			sf::Vector2f clampedCentre = GetCollisionCentre();
+			sf::FloatRect otherRect = _otherObject.GetAABB();
+			clampedCentre.x = std::fmaxf(otherRect.left, std::fminf(clampedCentre.x, 
+				otherRect.left + otherRect.width));
+			clampedCentre.y = std::fmaxf(otherRect.top, std::fminf(clampedCentre.y,
+				otherRect.top + otherRect.height));
+
+			sf::Vector2f distanceVec = clampedCentre - GetCollisionCentre();
+			float distance = VectorHelper::Magnitude(distanceVec);
+
+			return distance <= GetBoundingCircleRadius();
+		}
 		break;
 	}
 	case CollisionType::AABB:
 	{
-		return GetAABB().intersects(_otherObject.GetAABB());
+		if (_otherObject.GetCollisionType() == CollisionType::AABB)
+		{
+			return GetAABB().intersects(_otherObject.GetAABB());
+		}
+		else
+		{
+			// Clamp our coordinates to other's box size
+			sf::Vector2f clampedCentre = _otherObject.GetCollisionCentre();
+			sf::FloatRect otherRect = GetAABB();
+			clampedCentre.x = std::fmaxf(otherRect.left, std::fminf(clampedCentre.x,
+				otherRect.left + otherRect.width));
+			clampedCentre.y = std::fmaxf(otherRect.top, std::fminf(clampedCentre.y,
+				otherRect.top + otherRect.height));
+
+			sf::Vector2f distanceVec = clampedCentre - _otherObject.GetCollisionCentre();
+			float distance = VectorHelper::Magnitude(distanceVec);
+
+			return distance <= _otherObject.GetBoundingCircleRadius();
+		}
 		break;
 	}
 	break;
