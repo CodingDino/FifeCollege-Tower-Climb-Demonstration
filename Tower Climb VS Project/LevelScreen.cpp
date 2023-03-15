@@ -15,6 +15,22 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 void LevelScreen::Update(sf::Time frameTime)
 {
 	player.Update(frameTime);
+
+	// Check collision between player and objects
+	// First assume no collisions
+	player.SetColliding(false);
+	testPlatform.SetColliding(false);
+	testDoor.SetColliding(false);
+	if (player.CheckCollision(testPlatform))
+	{
+		player.SetColliding(true);
+		testPlatform.SetColliding(true);
+	}
+	if (player.CheckCollision(testDoor))
+	{
+		player.SetColliding(true);
+		testDoor.SetColliding(true);
+	}
 }
 
 void LevelScreen::Draw(sf::RenderTarget& target)

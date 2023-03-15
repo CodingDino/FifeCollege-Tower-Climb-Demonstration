@@ -155,11 +155,13 @@
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="SpriteObject.cpp" />
     <ClCompile Include="TitleScreen.cpp" />
+    <ClCompile Include="VectorHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssetManager.h" />
     <ClInclude Include="Door.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="VectorHelper.h" />
     <ClInclude Include="LevelScreen.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Player.h" />

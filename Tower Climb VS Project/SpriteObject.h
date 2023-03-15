@@ -17,6 +17,10 @@ public:
 	sf::Vector2f GetBoundingCircleCentre();
 	float GetBoundingCircleRadius();
 
+	bool CheckCollision(SpriteObject _otherObject);
+
+	void SetColliding(bool _colliding);
+
 
 protected:
 
@@ -26,6 +30,7 @@ protected:
 
 private:
 	sf::Vector2f position;
+	bool colliding;
 
 };
 
