@@ -25,7 +25,7 @@ Player::Player()
 void Player::Update(sf::Time frameTime)
 {
 	const float DRAG_MULT = 0.99f;
-	const PhysicsType physics = PhysicsType::VELOCITY_VERLET;
+	const PhysicsType physics = PhysicsType::FORWARD_EULER;
 
 	switch (physics)
 	{
@@ -126,7 +126,7 @@ void Player::Update(sf::Time frameTime)
 
 void Player::UpdateAcceleration()
 {
-	const float ACCEL = 1000;
+	const float ACCEL = 50000;
 
 	// Update acceleration
 	acceleration.x = 0;
