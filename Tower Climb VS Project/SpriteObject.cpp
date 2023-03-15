@@ -3,6 +3,8 @@
 
 SpriteObject::SpriteObject()
 	: sprite()
+	, collisionOffset(0,0)
+	, collisionScale(1,1)
 	, position(0,0)
 	, colliding(false)
 {
@@ -22,7 +24,7 @@ void SpriteObject::Draw(sf::RenderTarget& target)
 	{
 		sf::CircleShape circleCollision;
 		float radius = GetBoundingCircleRadius();
-		circleCollision.setPosition(GetBoundingCircleCentre());
+		circleCollision.setPosition(GetCollisionCentre());
 		circleCollision.setRadius(GetBoundingCircleRadius());
 		circleCollision.setOrigin(radius, radius);
 		sf::Color collisionColour = sf::Color::Green;
@@ -50,20 +52,23 @@ sf::Vector2f SpriteObject::GetPosition()
 	return position;
 }
 
-sf::Vector2f SpriteObject::GetBoundingCircleCentre()
+sf::Vector2f SpriteObject::GetCollisionCentre()
 {
 	float width = sprite.getGlobalBounds().height;
 	float height = sprite.getGlobalBounds().width;
 	sf::Vector2f centre = position;
 	centre.x += width / 2.0f;
 	centre.y += height / 2.0f;
+	centre += collisionOffset;
 	return centre;
 }
 
 float SpriteObject::GetBoundingCircleRadius()
 {
 	float width = sprite.getGlobalBounds().height;
+	width *= collisionScale.x;
 	float height = sprite.getGlobalBounds().width;
+	height *= collisionScale.y;
 	float radius = width / 2.0f;
 	if (height > width)
 		radius = height / 2.0f;
@@ -72,10 +77,10 @@ float SpriteObject::GetBoundingCircleRadius()
 
 bool SpriteObject::CheckCollision(SpriteObject _otherObject)
 {
-	sf::Vector2f otherCentre = _otherObject.GetBoundingCircleCentre();
+	sf::Vector2f otherCentre = _otherObject.GetCollisionCentre();
 	float otherRadius = _otherObject.GetBoundingCircleRadius();
 
-	sf::Vector2f distanceVector = otherCentre - GetBoundingCircleCentre();
+	sf::Vector2f distanceVector = otherCentre - GetCollisionCentre();
 
 	float distanceSquare = VectorHelper::SquareMagnitude(distanceVector);
 

@@ -1,6 +1,12 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
+enum class CollisionType
+{
+	CIRCLE,
+	AABB
+};
+
 class SpriteObject
 {
 public:
@@ -14,8 +20,10 @@ public:
 	void SetPosition(sf::Vector2f _position);
 	sf::Vector2f GetPosition();
 
-	sf::Vector2f GetBoundingCircleCentre();
+	sf::Vector2f GetCollisionCentre();
 	float GetBoundingCircleRadius();
+
+
 
 	bool CheckCollision(SpriteObject _otherObject);
 
@@ -26,11 +34,14 @@ protected:
 
 	sf::Sprite sprite;
 
-	// physics settings
+	// Collision settings
+	sf::Vector2f collisionOffset;
+	sf::Vector2f collisionScale;
 
 private:
 	sf::Vector2f position;
 	bool colliding;
+
 
 };
 
