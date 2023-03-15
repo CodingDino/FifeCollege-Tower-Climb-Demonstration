@@ -5,6 +5,7 @@ SpriteObject::SpriteObject()
 	: sprite()
 	, collisionOffset(0,0)
 	, collisionScale(1,1)
+	, collisionType(CollisionType::AABB)
 	, position(0,0)
 	, colliding(false)
 {
@@ -22,17 +23,40 @@ void SpriteObject::Draw(sf::RenderTarget& target)
 
 	if (drawCollision)
 	{
-		sf::CircleShape circleCollision;
-		float radius = GetBoundingCircleRadius();
-		circleCollision.setPosition(GetCollisionCentre());
-		circleCollision.setRadius(GetBoundingCircleRadius());
-		circleCollision.setOrigin(radius, radius);
-		sf::Color collisionColour = sf::Color::Green;
-		if (colliding)
-			collisionColour = sf::Color::Red;
-		collisionColour.a = 100;
-		circleCollision.setFillColor(collisionColour);
-		target.draw(circleCollision);
+		switch (collisionType)
+		{
+			case CollisionType::CIRCLE:
+			{
+				sf::CircleShape circleCollision;
+				float radius = GetBoundingCircleRadius();
+				circleCollision.setPosition(GetCollisionCentre());
+				circleCollision.setRadius(GetBoundingCircleRadius());
+				circleCollision.setOrigin(radius, radius);
+				sf::Color collisionColour = sf::Color::Green;
+				if (colliding)
+					collisionColour = sf::Color::Red;
+				collisionColour.a = 100;
+				circleCollision.setFillColor(collisionColour);
+				target.draw(circleCollision);
+				break;
+			}
+			case CollisionType::AABB:
+			{
+				sf::RectangleShape rectCollision;
+				rectCollision.setPosition(GetCollisionCentre() - GetBoundingRectSize() / 2.0f);
+				rectCollision.setSize(GetBoundingRectSize());
+				sf::Color collisionColour = sf::Color::Green;
+				if (colliding)
+					collisionColour = sf::Color::Red;
+				collisionColour.a = 100;
+				rectCollision.setFillColor(collisionColour);
+				target.draw(rectCollision);
+				break;
+			}
+				break;
+			default:
+				break;
+		}
 	}
 }
 
@@ -73,6 +97,22 @@ float SpriteObject::GetBoundingCircleRadius()
 	if (height > width)
 		radius = height / 2.0f;
 	return radius;
+}
+
+sf::Vector2f SpriteObject::GetBoundingRectSize()
+{
+	float width = sprite.getGlobalBounds().height;
+	width *= collisionScale.x;
+	float height = sprite.getGlobalBounds().width;
+	height *= collisionScale.y;
+	return sf::Vector2f(width,height);
+}
+
+sf::FloatRect SpriteObject::GetAABB()
+{
+	sf::Vector2f topLeft = GetCollisionCentre() - GetBoundingRectSize() / 2.0f;
+	sf::FloatRect rect = sf::FloatRect(topLeft, GetBoundingRectSize());
+	return sf::FloatRect(rect);
 }
 
 bool SpriteObject::CheckCollision(SpriteObject _otherObject)

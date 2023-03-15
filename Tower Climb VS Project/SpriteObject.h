@@ -22,6 +22,8 @@ public:
 
 	sf::Vector2f GetCollisionCentre();
 	float GetBoundingCircleRadius();
+	sf::Vector2f GetBoundingRectSize();
+	sf::FloatRect GetAABB();
 
 
 
@@ -38,9 +40,13 @@ protected:
 	sf::Vector2f collisionOffset;
 	sf::Vector2f collisionScale;
 
+	CollisionType collisionType;
+
 private:
 	sf::Vector2f position;
 	bool colliding;
+
+
 
 
 };
