@@ -117,17 +117,36 @@ sf::FloatRect SpriteObject::GetAABB()
 
 bool SpriteObject::CheckCollision(SpriteObject _otherObject)
 {
-	sf::Vector2f otherCentre = _otherObject.GetCollisionCentre();
-	float otherRadius = _otherObject.GetBoundingCircleRadius();
 
-	sf::Vector2f distanceVector = otherCentre - GetCollisionCentre();
 
-	float distanceSquare = VectorHelper::SquareMagnitude(distanceVector);
+	switch (collisionType)
+	{
+	case CollisionType::CIRCLE:
+	{
+		sf::Vector2f otherCentre = _otherObject.GetCollisionCentre();
+		float otherRadius = _otherObject.GetBoundingCircleRadius();
 
-	float minDistance = otherRadius + GetBoundingCircleRadius();
-	float minDistanceSquare = minDistance * minDistance;
+		sf::Vector2f distanceVector = otherCentre - GetCollisionCentre();
 
-	return distanceSquare <= minDistanceSquare;
+		float distanceSquare = VectorHelper::SquareMagnitude(distanceVector);
+
+		float minDistance = otherRadius + GetBoundingCircleRadius();
+		float minDistanceSquare = minDistance * minDistance;
+
+		return distanceSquare <= minDistanceSquare;
+		break;
+	}
+	case CollisionType::AABB:
+	{
+		return GetAABB().intersects(_otherObject.GetAABB());
+		break;
+	}
+	break;
+	default:
+
+		return false;
+		break;
+	}
 }
 
 void SpriteObject::SetColliding(bool _colliding)
