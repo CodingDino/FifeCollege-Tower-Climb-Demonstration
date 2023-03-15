@@ -7,6 +7,9 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 	, testPlatform()
 	, testDoor()
 {
+	testPlatform.SetPosition(500.0f, 500.0f);
+	testDoor.SetPosition(500.0f, 350.0f);
+	player.SetPosition(500.0f, 350.0f);
 }
 
 void LevelScreen::Update(sf::Time frameTime)
