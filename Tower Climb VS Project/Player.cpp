@@ -16,6 +16,7 @@ Player::Player()
 	, twoFramesOldPos(100,300)
 	, velocity(0,0)
 	, acceleration(0,0)
+	, shouldJump(false)
 {
 	sprite.setTexture(AssetManager::RequestTexture("Assets/Graphics/PlayerStand.png"));
 	sprite.setPosition(GetPosition());
@@ -40,7 +41,7 @@ void Player::Update(sf::Time frameTime)
 			velocity = velocity + acceleration * frameTime.asSeconds();
 
 			// drag
-			velocity = velocity - velocity*DRAG_MULT*frameTime.asSeconds();
+			velocity.x = velocity.x - velocity.x * DRAG_MULT * frameTime.asSeconds();
 
 			// Update acceleration
 			UpdateAcceleration();
@@ -57,7 +58,7 @@ void Player::Update(sf::Time frameTime)
 			velocity = velocity + acceleration * frameTime.asSeconds();
 
 			// drag
-			velocity = velocity - velocity * DRAG_MULT * frameTime.asSeconds();
+			velocity.x = velocity.x - velocity.x * DRAG_MULT * frameTime.asSeconds();
 
 			SetPosition( GetPosition() + velocity * frameTime.asSeconds());
 
@@ -71,7 +72,7 @@ void Player::Update(sf::Time frameTime)
 			velocity = velocity + acceleration * frameTime.asSeconds();
 
 			// drag
-			velocity = velocity - velocity * DRAG_MULT * frameTime.asSeconds();
+			velocity.x = velocity.x - velocity.x * DRAG_MULT * frameTime.asSeconds();
 
 			SetPosition( GetPosition() + velocity * frameTime.asSeconds());
 
@@ -114,7 +115,7 @@ void Player::Update(sf::Time frameTime)
 		velocity = halfFrameVelocity + acceleration * frameTime.asSeconds() / 2.0f;
 
 		// drag
-		velocity = velocity - velocity * DRAG_MULT * frameTime.asSeconds();
+		velocity.x = velocity.x - velocity.x * DRAG_MULT * frameTime.asSeconds();
 	}
 	break;
 
@@ -137,6 +138,12 @@ void Player::HandleSolidCollision(SpriteObject _other)
 	}
 	else
 	{
+		// If we were falling and we collided in the y direction and we're on the top side of the platform...
+		if (velocity.y > 0 )//&& depth.y < 0)
+		{
+			shouldJump = true;
+		}
+
 		// Move on y axis
 		newPos.y += depth.y;
 		velocity.y = 0;
@@ -149,10 +156,17 @@ void Player::HandleSolidCollision(SpriteObject _other)
 void Player::UpdateAcceleration()
 {
 	const float ACCEL = 5000;
+	const float GRAVITY = 1000;
+	const float JUMP = 1000;
 
 	// Update acceleration
 	acceleration.x = 0;
-	acceleration.y = 0;
+	acceleration.y = GRAVITY;
+	if (shouldJump)
+	{
+		velocity.y = -JUMP;
+		shouldJump = false;
+	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) || sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
 		acceleration.x = -ACCEL;
@@ -160,14 +174,6 @@ void Player::UpdateAcceleration()
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
 		acceleration.x = ACCEL;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-	{
-		acceleration.y = -ACCEL;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-	{
-		acceleration.y = ACCEL;
 	}
 }
 

@@ -36,7 +36,7 @@ void LevelScreen::Update(sf::Time frameTime)
 
 void LevelScreen::Draw(sf::RenderTarget& target)
 {
-	player.Draw(target);
 	testPlatform.Draw(target);
 	testDoor.Draw(target);
+	player.Draw(target);
 }
