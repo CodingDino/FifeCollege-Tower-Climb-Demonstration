@@ -12,6 +12,8 @@ public:
 
     void Update(sf::Time frameTime) override;
 
+    void HandleSolidCollision(SpriteObject _other);
+
 private:
 
     void UpdateAcceleration();

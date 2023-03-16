@@ -20,16 +20,18 @@ public:
 	void SetPosition(sf::Vector2f _position);
 	sf::Vector2f GetPosition();
 
+	bool CheckCollision(SpriteObject _otherObject);
+	sf::Vector2f GetCollisionDepth(SpriteObject _otherObject);
+
+	void SetColliding(bool _colliding);
+
+private:
+
 	sf::Vector2f GetCollisionCentre();
 	float GetBoundingCircleRadius();
 	sf::Vector2f GetBoundingRectSize();
 	sf::FloatRect GetAABB();
 	CollisionType GetCollisionType();
-
-
-	bool CheckCollision(SpriteObject _otherObject);
-
-	void SetColliding(bool _colliding);
 
 protected:
 

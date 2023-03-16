@@ -25,6 +25,7 @@ void LevelScreen::Update(sf::Time frameTime)
 	{
 		player.SetColliding(true);
 		testPlatform.SetColliding(true);
+		player.HandleSolidCollision(testPlatform);
 	}
 	if (player.CheckCollision(testDoor))
 	{

@@ -22,12 +22,12 @@ Player::Player()
 
 	collisionScale = sf::Vector2f(0.5f, 0.70f);
 	collisionOffset = sf::Vector2f(0, 20);
-	collisionType = CollisionType::CIRCLE;
+	collisionType = CollisionType::AABB;
 }
 
 void Player::Update(sf::Time frameTime)
 {
-	const float DRAG_MULT = 0.99f;
+	const float DRAG_MULT = 10.0f;
 	const PhysicsType physics = PhysicsType::FORWARD_EULER;
 
 	switch (physics)
@@ -40,7 +40,7 @@ void Player::Update(sf::Time frameTime)
 			velocity = velocity + acceleration * frameTime.asSeconds();
 
 			// drag
-			velocity = velocity * DRAG_MULT;
+			velocity = velocity - velocity*DRAG_MULT*frameTime.asSeconds();
 
 			// Update acceleration
 			UpdateAcceleration();
@@ -57,7 +57,7 @@ void Player::Update(sf::Time frameTime)
 			velocity = velocity + acceleration * frameTime.asSeconds();
 
 			// drag
-			velocity = velocity * DRAG_MULT;
+			velocity = velocity - velocity * DRAG_MULT * frameTime.asSeconds();
 
 			SetPosition( GetPosition() + velocity * frameTime.asSeconds());
 
@@ -71,7 +71,7 @@ void Player::Update(sf::Time frameTime)
 			velocity = velocity + acceleration * frameTime.asSeconds();
 
 			// drag
-			velocity = velocity * DRAG_MULT;
+			velocity = velocity - velocity * DRAG_MULT * frameTime.asSeconds();
 
 			SetPosition( GetPosition() + velocity * frameTime.asSeconds());
 
@@ -114,7 +114,7 @@ void Player::Update(sf::Time frameTime)
 		velocity = halfFrameVelocity + acceleration * frameTime.asSeconds() / 2.0f;
 
 		// drag
-		velocity = velocity * DRAG_MULT;
+		velocity = velocity - velocity * DRAG_MULT * frameTime.asSeconds();
 	}
 	break;
 
@@ -123,9 +123,28 @@ void Player::Update(sf::Time frameTime)
 	}
 }
 
+void Player::HandleSolidCollision(SpriteObject _other)
+{
+	sf::Vector2f depth = GetCollisionDepth(_other);
+	sf::Vector2f newPos = GetPosition();
+
+	if (abs(depth.x) < abs(depth.y))
+	{
+		// Move on x axis
+		newPos.x += depth.x;
+	}
+	else
+	{
+		// Move on y axis
+		newPos.y += depth.y;
+	}
+
+	SetPosition(newPos);
+}
+
 void Player::UpdateAcceleration()
 {
-	const float ACCEL = 50000;
+	const float ACCEL = 5000;
 
 	// Update acceleration
 	acceleration.x = 0;

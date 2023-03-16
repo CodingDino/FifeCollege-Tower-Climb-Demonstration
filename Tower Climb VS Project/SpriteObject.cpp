@@ -192,6 +192,33 @@ bool SpriteObject::CheckCollision(SpriteObject _otherObject)
 	}
 }
 
+sf::Vector2f SpriteObject::GetCollisionDepth(SpriteObject _otherObject)
+{
+	sf::FloatRect thisAABB = GetAABB();
+	sf::FloatRect otherAABB = _otherObject.GetAABB();
+
+	sf::Vector2f thisCentre = GetCollisionCentre();
+	sf::Vector2f otherCentre = _otherObject.GetCollisionCentre();
+
+	sf::Vector2f minDistance;
+	minDistance.x = thisAABB.width * 0.5f + otherAABB.width * 0.5f;
+	minDistance.y = thisAABB.height * 0.5f + otherAABB.height * 0.5f;
+
+	sf::Vector2f actualDistance = otherCentre - thisCentre;
+
+	// correct minDistance to be the same sign as actual distance
+	if (actualDistance.x < 0)
+		minDistance.x = -minDistance.x;
+	if (actualDistance.y < 0)
+		minDistance.y = -minDistance.y;
+
+	sf::Vector2f depth = actualDistance - minDistance;
+
+
+
+	return depth;
+}
+
 void SpriteObject::SetColliding(bool _colliding)
 {
 	colliding = _colliding;
