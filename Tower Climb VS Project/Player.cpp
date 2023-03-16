@@ -132,11 +132,15 @@ void Player::HandleSolidCollision(SpriteObject _other)
 	{
 		// Move on x axis
 		newPos.x += depth.x;
+		velocity.x = 0;
+		acceleration.x = 0;
 	}
 	else
 	{
 		// Move on y axis
 		newPos.y += depth.y;
+		velocity.y = 0;
+		acceleration.y = 0;
 	}
 
 	SetPosition(newPos);
