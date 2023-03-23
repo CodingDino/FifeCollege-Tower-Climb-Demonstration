@@ -16,6 +16,8 @@ public:
 	void Update();
 	void Draw();
 
+	sf::RenderWindow& GetRenderWindow();
+
 
 private:
 

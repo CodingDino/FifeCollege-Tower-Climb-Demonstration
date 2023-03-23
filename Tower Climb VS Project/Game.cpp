@@ -64,3 +64,8 @@ void Game::Draw()
 
 	window.display();
 }
+
+sf::RenderWindow& Game::GetRenderWindow()
+{
+	return window;
+}

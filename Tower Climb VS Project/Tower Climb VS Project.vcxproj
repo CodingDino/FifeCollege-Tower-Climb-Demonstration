@@ -150,6 +150,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="LevelScreen.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MovingPlatform.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Screen.cpp" />
@@ -161,6 +162,7 @@
     <ClInclude Include="AssetManager.h" />
     <ClInclude Include="Door.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="MovingPlatform.h" />
     <ClInclude Include="VectorHelper.h" />
     <ClInclude Include="LevelScreen.h" />
     <ClInclude Include="Platform.h" />
