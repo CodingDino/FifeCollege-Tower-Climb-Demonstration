@@ -22,12 +22,13 @@ public:
 
 	bool CheckCollision(SpriteObject _otherObject);
 	sf::Vector2f GetCollisionDepth(SpriteObject _otherObject);
-	virtual void HandleCollision(SpriteObject _other);
+	virtual void HandleCollision(SpriteObject& _other);
 	bool GetSolid();
 
 	void SetColliding(bool _colliding);
 
 	bool GetAlive();
+	void SetAlive(bool _newAlive);
 
 private:
 

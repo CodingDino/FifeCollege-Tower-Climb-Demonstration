@@ -126,7 +126,7 @@ void Player::Update(sf::Time frameTime)
 	SpriteObject::Update(frameTime);
 }
 
-void Player::HandleCollision(SpriteObject _other)
+void Player::HandleCollision(SpriteObject& _other)
 {
 	if (_other.GetSolid())
 	{

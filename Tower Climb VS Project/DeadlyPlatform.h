@@ -1,13 +1,13 @@
-#pragma once
+
 #include "Platform.h"
-class BreakingPlatform :
+
+
+class DeadlyPlatform :
     public Platform
 {
 
-public: 
-    BreakingPlatform();
+public:
+    DeadlyPlatform();
 
     void HandleCollision(SpriteObject& _other) override;
-
 };
-

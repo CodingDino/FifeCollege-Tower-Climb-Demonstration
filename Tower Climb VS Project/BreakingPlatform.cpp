@@ -7,7 +7,7 @@ BreakingPlatform::BreakingPlatform()
 	sprite.setTexture(AssetManager::RequestTexture("Assets/Graphics/BreakingPlatform.png"));
 }
 
-void BreakingPlatform::HandleCollision(SpriteObject _other)
+void BreakingPlatform::HandleCollision(SpriteObject& _other)
 {
 	alive = false;
 	solid = false;

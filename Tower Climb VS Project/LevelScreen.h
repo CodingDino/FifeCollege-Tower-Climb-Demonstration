@@ -4,6 +4,7 @@
 #include "Platform.h"
 #include "MovingPlatform.h"
 #include "BreakingPlatform.h"
+#include "DeadlyPlatform.h"
 #include "Door.h"
 #include <SFML/Graphics.hpp>
 
@@ -26,6 +27,7 @@ private:
     Platform testPlatform;
     MovingPlatform testMovingPlatform;
     BreakingPlatform testBreakingPlatform;
+    DeadlyPlatform testDeadlyPlatform;
     Door testDoor;
 
 };

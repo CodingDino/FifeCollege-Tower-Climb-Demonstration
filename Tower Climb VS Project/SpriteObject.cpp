@@ -226,7 +226,7 @@ sf::Vector2f SpriteObject::GetCollisionDepth(SpriteObject _otherObject)
 	return depth;
 }
 
-void SpriteObject::HandleCollision(SpriteObject _other)
+void SpriteObject::HandleCollision(SpriteObject& _other)
 {
 	SetColliding(true);
 }
@@ -244,4 +244,9 @@ void SpriteObject::SetColliding(bool _colliding)
 bool SpriteObject::GetAlive()
 {
 	return alive;
+}
+
+void SpriteObject::SetAlive(bool _newAlive)
+{
+	alive = _newAlive;
 }
