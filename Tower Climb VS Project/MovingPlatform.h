@@ -5,7 +5,7 @@ class MovingPlatform :
 {
 
 public:
-    MovingPlatform(float newMinX, float newMaxX);
+    MovingPlatform(sf::Vector2f startingPos, float newMinX, float newMaxX);
 
     void Update(sf::Time frameTime) override;
 

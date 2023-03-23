@@ -1,7 +1,7 @@
 #include "Platform.h"
 #include "AssetManager.h"
 
-Platform::Platform()
+Platform::Platform(sf::Vector2f startingPos)
 	: SpriteObject()
 {
 	solid = true;
@@ -9,4 +9,5 @@ Platform::Platform()
 	collisionType = CollisionType::AABB;
 	collisionScale = sf::Vector2f(1.0f, 0.3f);
 	collisionOffset = sf::Vector2f(0.0f, -55.0f);
+	SetPosition(startingPos);
 }

@@ -1,8 +1,8 @@
 #include "MovingPlatform.h"
 #include "AssetManager.h"
 
-MovingPlatform::MovingPlatform(float newMinX, float newMaxX)
-	: Platform()
+MovingPlatform::MovingPlatform(sf::Vector2f startingPos, float newMinX, float newMaxX)
+	: Platform(startingPos)
 	, SPEED(100)
 	, MIN_X(newMinX)
 	, MAX_X(newMaxX)

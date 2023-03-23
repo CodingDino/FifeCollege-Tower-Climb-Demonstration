@@ -5,7 +5,7 @@ class BreakingPlatform :
 {
 
 public: 
-    BreakingPlatform();
+    BreakingPlatform(sf::Vector2f startingPos);
 
     void HandleCollision(SpriteObject& _other) override;
 

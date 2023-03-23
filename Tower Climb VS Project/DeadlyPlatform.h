@@ -7,7 +7,7 @@ class DeadlyPlatform :
 {
 
 public:
-    DeadlyPlatform();
+    DeadlyPlatform(sf::Vector2f startingPos);
 
     void HandleCollision(SpriteObject& _other) override;
 };

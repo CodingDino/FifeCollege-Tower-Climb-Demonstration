@@ -1,14 +1,11 @@
 #pragma once
 #include "Screen.h"
 #include "Player.h"
-#include "Platform.h"
-#include "MovingPlatform.h"
-#include "BreakingPlatform.h"
-#include "DeadlyPlatform.h"
 #include "Door.h"
 #include <SFML/Graphics.hpp>
 
 class Game;
+class Platform;
 
 class LevelScreen :
     public Screen
@@ -24,10 +21,7 @@ public:
 private:
 
     Player player;
-    Platform testPlatform;
-    MovingPlatform testMovingPlatform;
-    BreakingPlatform testBreakingPlatform;
-    DeadlyPlatform testDeadlyPlatform;
+    std::vector<Platform*> platforms;
     Door testDoor;
 
 };

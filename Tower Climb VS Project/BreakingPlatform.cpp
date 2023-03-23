@@ -1,8 +1,8 @@
 #include "BreakingPlatform.h"
 #include "AssetManager.h"
 
-BreakingPlatform::BreakingPlatform()
-	: Platform()
+BreakingPlatform::BreakingPlatform(sf::Vector2f startingPos)
+	: Platform(startingPos)
 {
 	sprite.setTexture(AssetManager::RequestTexture("Assets/Graphics/BreakingPlatform.png"));
 }

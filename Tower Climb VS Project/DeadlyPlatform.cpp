@@ -2,7 +2,8 @@
 #include "DeadlyPlatform.h"
 #include "AssetManager.h"
 
-DeadlyPlatform::DeadlyPlatform()
+DeadlyPlatform::DeadlyPlatform(sf::Vector2f startingPos)
+	: Platform(startingPos)
 {
 	sprite.setTexture(AssetManager::RequestTexture("Assets/Graphics/DeadlyPlatform.png"));
 }
