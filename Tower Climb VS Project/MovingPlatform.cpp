@@ -31,4 +31,5 @@ void MovingPlatform::Update(sf::Time frameTime)
 	}
 
 	SetPosition(newPos);
+	SpriteObject::Update(frameTime);
 }

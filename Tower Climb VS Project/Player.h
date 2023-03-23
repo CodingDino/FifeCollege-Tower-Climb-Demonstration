@@ -12,7 +12,7 @@ public:
 
     void Update(sf::Time frameTime) override;
 
-    void HandleSolidCollision(SpriteObject _other);
+    void HandleCollision(SpriteObject _other) override;
 
 private:
 

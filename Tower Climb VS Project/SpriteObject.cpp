@@ -9,11 +9,13 @@ SpriteObject::SpriteObject()
 	, collisionType(CollisionType::AABB)
 	, position(0,0)
 	, colliding(false)
+	, solid(false)
 {
 }
 
 void SpriteObject::Update(sf::Time frameTime)
 {
+	SetColliding(false);
 }
 
 void SpriteObject::Draw(sf::RenderTarget& target)
@@ -217,6 +219,16 @@ sf::Vector2f SpriteObject::GetCollisionDepth(SpriteObject _otherObject)
 
 
 	return depth;
+}
+
+void SpriteObject::HandleCollision(SpriteObject _other)
+{
+	SetColliding(true);
+}
+
+bool SpriteObject::GetSolid()
+{
+	return solid;
 }
 
 void SpriteObject::SetColliding(bool _colliding)

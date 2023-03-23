@@ -5,5 +5,6 @@ class Platform :
 {
 public:
     Platform();
+
 };
 

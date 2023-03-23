@@ -122,35 +122,41 @@ void Player::Update(sf::Time frameTime)
 	default:
 		break;
 	}
+
+	SpriteObject::Update(frameTime);
 }
 
-void Player::HandleSolidCollision(SpriteObject _other)
+void Player::HandleCollision(SpriteObject _other)
 {
-	sf::Vector2f depth = GetCollisionDepth(_other);
-	sf::Vector2f newPos = GetPosition();
+	if (_other.GetSolid())
+	{
+		sf::Vector2f depth = GetCollisionDepth(_other);
+		sf::Vector2f newPos = GetPosition();
 
-	if (abs(depth.x) < abs(depth.y))
-	{
-		// Move on x axis
-		newPos.x += depth.x;
-		velocity.x = 0;
-		acceleration.x = 0;
-	}
-	else
-	{
-		// If we were falling and we collided in the y direction and we're on the top side of the platform...
-		if (velocity.y > 0 )//&& depth.y < 0)
+		if (abs(depth.x) < abs(depth.y))
 		{
-			shouldJump = true;
+			// Move on x axis
+			newPos.x += depth.x;
+			velocity.x = 0;
+			acceleration.x = 0;
+		}
+		else
+		{
+			// If we were falling and we collided in the y direction and we're on the top side of the platform...
+			if (velocity.y > 0)//&& depth.y < 0)
+			{
+				shouldJump = true;
+			}
+
+			// Move on y axis
+			newPos.y += depth.y;
+			velocity.y = 0;
+			acceleration.y = 0;
 		}
 
-		// Move on y axis
-		newPos.y += depth.y;
-		velocity.y = 0;
-		acceleration.y = 0;
+		SetPosition(newPos);
 	}
-
-	SetPosition(newPos);
+	SpriteObject::HandleCollision(_other);
 }
 
 void Player::UpdateAcceleration()

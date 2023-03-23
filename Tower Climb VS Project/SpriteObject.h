@@ -22,8 +22,11 @@ public:
 
 	bool CheckCollision(SpriteObject _otherObject);
 	sf::Vector2f GetCollisionDepth(SpriteObject _otherObject);
+	virtual void HandleCollision(SpriteObject _other);
+	bool GetSolid();
 
 	void SetColliding(bool _colliding);
+
 
 private:
 
@@ -42,6 +45,7 @@ protected:
 	sf::Vector2f collisionScale;
 
 	CollisionType collisionType;
+	bool solid;
 
 private:
 	sf::Vector2f position;

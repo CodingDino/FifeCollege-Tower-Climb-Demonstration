@@ -4,6 +4,7 @@
 Platform::Platform()
 	: SpriteObject()
 {
+	solid = true;
 	sprite.setTexture(AssetManager::RequestTexture("Assets/Graphics/Platform.png"));
 	collisionType = CollisionType::AABB;
 	collisionScale = sf::Vector2f(1.0f, 0.3f);
