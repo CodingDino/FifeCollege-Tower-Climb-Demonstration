@@ -7,9 +7,7 @@ class BreakingPlatform :
 public: 
     BreakingPlatform();
 
-    void Draw(sf::RenderTarget& target) override;
+    void HandleCollision(SpriteObject _other) override;
 
-private:
-    bool alive;
 };
 

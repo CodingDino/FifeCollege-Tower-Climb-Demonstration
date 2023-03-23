@@ -27,6 +27,7 @@ public:
 
 	void SetColliding(bool _colliding);
 
+	bool GetAlive();
 
 private:
 
@@ -46,13 +47,11 @@ protected:
 
 	CollisionType collisionType;
 	bool solid;
+	bool alive;
 
 private:
 	sf::Vector2f position;
 	bool colliding;
-
-
-
 
 };
 

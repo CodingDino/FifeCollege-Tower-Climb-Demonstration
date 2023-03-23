@@ -10,6 +10,7 @@ SpriteObject::SpriteObject()
 	, position(0,0)
 	, colliding(false)
 	, solid(false)
+	, alive(true)
 {
 }
 
@@ -20,6 +21,9 @@ void SpriteObject::Update(sf::Time frameTime)
 
 void SpriteObject::Draw(sf::RenderTarget& target)
 {
+	if (!alive)
+		return; // exit early if not alive
+
 	target.draw(sprite);
 
 	bool drawCollision = true;
@@ -126,7 +130,8 @@ CollisionType SpriteObject::GetCollisionType()
 
 bool SpriteObject::CheckCollision(SpriteObject _otherObject)
 {
-
+	if (!alive || !_otherObject.alive)
+		return false; // Exit early if one of hte two objects is dead
 
 	switch (collisionType)
 	{
@@ -234,4 +239,9 @@ bool SpriteObject::GetSolid()
 void SpriteObject::SetColliding(bool _colliding)
 {
 	colliding = _colliding;
+}
+
+bool SpriteObject::GetAlive()
+{
+	return alive;
 }

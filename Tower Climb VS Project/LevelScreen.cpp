@@ -7,10 +7,12 @@ LevelScreen::LevelScreen(Game* newGamePointer)
 	, player()
 	, testPlatform()
 	, testMovingPlatform(0,newGamePointer->GetRenderWindow().getSize().x)
+	, testBreakingPlatform()
 	, testDoor()
 {
 	testPlatform.SetPosition(500.0f, 500.0f);
 	testMovingPlatform.SetPosition(700.0f, 700.0f);
+	testBreakingPlatform.SetPosition(100.0f, 600.0f);
 	testDoor.SetPosition(500.0f, 350.0f);
 	player.SetPosition(500.0f, 350.0f);
 }
@@ -21,6 +23,7 @@ void LevelScreen::Update(sf::Time frameTime)
 	testDoor.Update(frameTime);
 	testPlatform.Update(frameTime);
 	testMovingPlatform.Update(frameTime);
+	testBreakingPlatform.Update(frameTime);
 
 	// Check collision between player and objects
 	// First assume no collisions
@@ -34,6 +37,11 @@ void LevelScreen::Update(sf::Time frameTime)
 		player.HandleCollision(testMovingPlatform);
 		testMovingPlatform.HandleCollision(player);
 	}
+	if (player.CheckCollision(testBreakingPlatform))
+	{
+		player.HandleCollision(testBreakingPlatform);
+		testBreakingPlatform.HandleCollision(player);
+	}
 	if (player.CheckCollision(testDoor))
 	{
 		player.HandleCollision(testDoor);
@@ -45,6 +53,7 @@ void LevelScreen::Draw(sf::RenderTarget& target)
 {
 	testPlatform.Draw(target);
 	testMovingPlatform.Draw(target);
+	testBreakingPlatform.Draw(target);
 	testDoor.Draw(target);
 	player.Draw(target);
 }
