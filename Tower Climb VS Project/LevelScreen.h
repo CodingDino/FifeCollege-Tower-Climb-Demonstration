@@ -31,5 +31,7 @@ private:
 
     std::vector<Platform*> platforms;
 
+    sf::View camera;
+
 };
 
