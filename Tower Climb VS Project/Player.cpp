@@ -28,6 +28,9 @@ Player::Player()
 
 void Player::Update(sf::Time frameTime)
 {
+	if (!alive)
+		return;
+
 	const float DRAG_MULT = 10.0f;
 	const PhysicsType physics = PhysicsType::FORWARD_EULER;
 

@@ -24,5 +24,7 @@ private:
     std::vector<Platform*> platforms;
     Door testDoor;
 
+    sf::View camera;
+
 };
 
