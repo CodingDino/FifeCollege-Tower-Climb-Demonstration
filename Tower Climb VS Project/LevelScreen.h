@@ -17,14 +17,20 @@ public:
     void Update(sf::Time frameTime) override;
     void Draw(sf::RenderTarget& target) override;
 
+    void LoadNextLevel();
+    void LoadLevel(int levelNumber);
+    bool LoadLevel(std::string fileName);
+
 
 private:
 
     Player player;
     std::vector<Platform*> platforms;
-    Door testDoor;
+    Door door;
 
     sf::View camera;
+
+    int currentLevel;
 
 };
 
