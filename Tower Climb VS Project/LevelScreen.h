@@ -20,18 +20,24 @@ public:
 
     void TriggerEndState(bool _win);
 
+    bool LoadNextLevel();
+
 private:
 
     void Restart();
 
+    bool LoadLevel(int levelNumber);
+    bool LoadLevel(std::string fileName);
+
     Player player;
-    Door testDoor;
+    Door door;
     EndPanel endPanel;
     bool gameRunning;
 
     std::vector<Platform*> platforms;
 
     sf::View camera;
+    int currentLevel;
 
 };
 
